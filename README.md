@@ -59,6 +59,17 @@ python mms_lid_256.py > mms-checkpoints-test/mms-lid-256.txt
 python verbalize_text.py
 ```
 
+## Misc
+
+MMS has these models for the LID task:
+
+- https://huggingface.co/facebook/mms-lid-4017
+- https://huggingface.co/facebook/mms-lid-2048
+- https://huggingface.co/facebook/mms-lid-1024
+- https://huggingface.co/facebook/mms-lid-512
+- https://huggingface.co/facebook/mms-lid-256
+- https://huggingface.co/facebook/mms-lid-126
+
 [1]: https://huggingface.co/datasets/espnet/yodas2
 [2]: https://github.com/astral-sh/uv
 [3]: https://github.com/leahneukirchen/nq
