@@ -15,7 +15,10 @@ Authors:
 2. Use https://huggingface.co/skypro1111/mbart-large-50-verbalization to do text normalization of text samples
 (i.e.: convert numerals to their text form $5 -> five dollars).
 
-We use [YODAS2][1] as a test dataset for our experiment.
+## Some details
+
+- We use [YODAS2][1] as a test dataset for our experiment.
+- You need to have [uv][2], [nq][3], Python 3.12, and a GPU card to run the code.
 
 ## Install
 
@@ -57,3 +60,5 @@ python verbalize_text.py
 ```
 
 [1]: https://huggingface.co/datasets/espnet/yodas2
+[2]: https://github.com/astral-sh/uv
+[3]: https://github.com/leahneukirchen/nq
