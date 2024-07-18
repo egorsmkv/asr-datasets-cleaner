@@ -1,0 +1,7 @@
+.venv/
+.ruff_cache/
+
+cache-yodas2-uk/
+
+# this is nq output
+,*.*
