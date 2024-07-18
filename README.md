@@ -1,24 +1,25 @@
 # `asr-datasets-cleaner`
 
-> This repository shows how to make a pipeline that can be used for **(1)** to remove incorrect audio samples from ASR datasets by LID filtering and **(2)** to normalize text samples for better ASR training. We use *Ukrainian* as an example.
+> [!WARNING]  
+> Currently, this work is in progress.
+
+> This repository contains a pipeline for better ASR training solving these two tasks: **(1)** remove incorrect audio samples from ASR datasets by LID filtering and **(2)** normalize text samples.
 
 Authors:
 
-- Yehor Smoliakov: @egorsmkv on GitHub, and egorsmkv@gmail.com for private discussions.
+- Yehor Smoliakov: [@egorsmkv][4] on GitHub, and <egorsmkv@gmail.com> for private discussions.
 
-> Currently, this work is in progress.
-
-## Main idea
+## Idea
 
 1. Use https://huggingface.co/facebook/mms-lid-126 to detect the language in audio samples.
 
 2. Use https://huggingface.co/skypro1111/mbart-large-50-verbalization to do text normalization of text samples
-(i.e.: convert numerals to their text form $5 -> five dollars).
+(convert numerals to their text form, that is, $5 -> five dollars).
 
-## Some details
+## Details
 
-- We use [YODAS2][1] as a test dataset for our experiment.
-- You need to have [uv][2], [nq][3], Python 3.12, and a GPU card to run the code.
+- We use the *Ukrainian* subset of [YODAS2][1] in our experiment.
+- You need to have [uv][2], [nq][3], Python 3.12, and a CUDA device to run the code.
 
 ## Install
 
@@ -56,7 +57,7 @@ python mms_lid_256.py > mms-checkpoints-test/mms-lid-256.txt
 3. (optional) Inference a text sample by MBART model for text normalization:
 
 ```shell
-python verbalize_text.py
+python text_normalization.py
 ```
 
 ## Misc
@@ -73,3 +74,4 @@ MMS has these models for the LID task:
 [1]: https://huggingface.co/datasets/espnet/yodas2
 [2]: https://github.com/astral-sh/uv
 [3]: https://github.com/leahneukirchen/nq
+[4]: https://github.com/egorsmkv
