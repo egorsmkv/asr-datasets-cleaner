@@ -54,7 +54,7 @@ for _ in range(n_samples):
             extracted_audio, sampling_rate=16_000, return_tensors="pt"
         ).to(device)
 
-        with torch.no_grad():
+        with torch.inference_mode():
             outputs = model(**inputs).logits
 
         lang_id = torch.argmax(outputs, dim=-1)[0].item()

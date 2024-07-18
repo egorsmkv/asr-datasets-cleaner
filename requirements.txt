@@ -5,4 +5,5 @@ transformers
 accelerate
 datasets
 
+librosa
 soundfile
