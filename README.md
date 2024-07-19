@@ -40,7 +40,7 @@ ruff format
 
 ## Usage
 
-1. Download the dataset locally:
+1. Download the dataset to the local disk:
 
 ```shell
 nq python download_dataset.py
