@@ -1,16 +1,22 @@
+import argparse
 import torch
 
 from transformers import Wav2Vec2ForSequenceClassification, AutoFeatureExtractor
 from datasets import load_dataset
 
-cache_dir = "./cache-yodas2-uk/"
-ds = load_dataset("espnet/yodas2", "uk000", cache_dir=cache_dir)
+parser = argparse.ArgumentParser(description="Show how MMS LID works")
 
-model_id = "facebook/mms-lid-256"
-device = "cuda:0"
+parser.add_argument("-cd", "--cache_dir", required=True)
+parser.add_argument("-m", "--model_id", required=True)
+parser.add_argument("-s", "--subset", required=True)
+parser.add_argument("-d", "--device", required=True)
 
-processor = AutoFeatureExtractor.from_pretrained(model_id)
-model = Wav2Vec2ForSequenceClassification.from_pretrained(model_id).to(device)
+args = parser.parse_args()
+
+ds = load_dataset("espnet/yodas2", args.subset, cache_dir=args.cache_dir)
+
+processor = AutoFeatureExtractor.from_pretrained(args.model_id)
+model = Wav2Vec2ForSequenceClassification.from_pretrained(args.model_id).to(args.device)
 
 print("Supported languages:")
 print(list(model.config.id2label.values()))
@@ -52,7 +58,7 @@ for _ in range(n_samples):
 
         inputs = processor(
             extracted_audio, sampling_rate=16_000, return_tensors="pt"
-        ).to(device)
+        ).to(args.device)
 
         with torch.inference_mode():
             outputs = model(**inputs).logits

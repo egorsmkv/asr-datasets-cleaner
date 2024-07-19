@@ -49,9 +49,9 @@ nq python download_dataset.py
 2. (optional) Inference audio samples from YODAS2 by difference variants of MMS LID model to see their outputs:
 
 ```shell
-python mms_lid_126.py > mms-checkpoints-test/mms-lid-126.txt
+python mms_lid.py --model_id facebook/mms-lid-126 --cache_dir cache-yodas2-uk --subset uk000 --device cuda:0 > mms-checkpoints-test/mms-lid-126.txt
 
-python mms_lid_256.py > mms-checkpoints-test/mms-lid-256.txt
+python mms_lid.py --model_id facebook/mms-lid-256 --cache_dir cache2-yodas2-uk --subset uk100 --device cuda:0 > mms-checkpoints-test/mms-lid-126.txt
 ```
 
 3. (optional) Inference a text sample by MBART model for text normalization:
