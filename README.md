@@ -60,7 +60,13 @@ python text_lid.py --file data/uk000.jsonl --to data/uk000_+tlid.jsonl
 python text_lid.py --file data/uk100.jsonl --to data/uk100_+tlid.jsonl
 ```
 
-4. Normalize utterances:
+4. Audio LID:
+
+```shell
+python audio_lid.py --cache_dir cache-yodas2-uk --subset uk000 --batch_size 16 --model_id facebook/mms-lid-126 --file data/uk000_+tlid.jsonl --to data/uk000_+tlid_+alid.jsonl --device cuda:0
+```
+
+5. Normalize utterances:
 
 ```shell
 python normalize_utterances.py --file data/uk000.jsonl --batch_size 8 --device cuda:0 --to data/uk000_normalized.jsonl
