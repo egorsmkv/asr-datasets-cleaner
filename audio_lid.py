@@ -67,6 +67,8 @@ for i, batches in enumerate(ds_iter):
                 start_samples = len(audio_data)
 
             extracted_audio = audio_data[start_samples:end_samples]
+            if len(extracted_audio) == 0:
+                continue
 
             utterances.append(
                 {
