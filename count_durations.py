@@ -29,7 +29,7 @@ for batch in ds_iter:
         if len(text) == 0:
             continue
 
-        for idx, text in enumerate(text):
+        for idx, _ in enumerate(text):
             start = utterances["start"][idx]
             end = utterances["end"][idx]
 
