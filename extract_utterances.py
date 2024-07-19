@@ -1,7 +1,10 @@
+import os
 import json
 import argparse
 
 from datasets import load_dataset
+
+os.environ["HF_DATASETS_OFFLINE"] = "true"
 
 parser = argparse.ArgumentParser(description="Extract utterances")
 

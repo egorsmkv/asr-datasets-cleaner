@@ -1,3 +1,4 @@
+import os
 import json
 import argparse
 
@@ -6,6 +7,7 @@ import torch
 from transformers import Wav2Vec2ForSequenceClassification, AutoFeatureExtractor
 from datasets import load_dataset, Audio
 
+os.environ["HF_DATASETS_OFFLINE"] = "true"
 
 parser = argparse.ArgumentParser(description="Audio LID on utterances")
 

@@ -1,6 +1,9 @@
+import os
 import argparse
 
 from datasets import load_dataset
+
+os.environ["HF_DATASETS_OFFLINE"] = "true"
 
 parser = argparse.ArgumentParser(description="Audio LID on utterances")
 
