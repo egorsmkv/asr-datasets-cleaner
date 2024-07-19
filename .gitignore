@@ -1,6 +1,8 @@
 .venv/
 .ruff_cache/
 
+data/
+
 cache-yodas2-uk/
 cache2-yodas2-uk/
 

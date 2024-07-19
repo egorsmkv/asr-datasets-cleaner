@@ -46,6 +46,14 @@ ruff format
 nq python download_dataset.py
 ```
 
+2. Extract utterances from the dataset:
+
+```shell
+python extract_utterances.py --cache_dir cache-yodas2-uk --subset uk000 > data/uk000.jsonl
+
+python extract_utterances.py --cache_dir cache2-yodas2-uk --subset uk100 > data/uk100.jsonl
+```
+
 2. (optional) Inference audio samples from YODAS2 by difference variants of MMS LID model to see their outputs:
 
 ```shell
