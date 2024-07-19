@@ -25,9 +25,11 @@ model = MBartForConditionalGeneration.from_pretrained(
 )
 model.eval()
 
-input_text = (
-    "<verbalization>:Мені 23 роки і я маю $500 у своєму банку що на вул. Жмеринській!"
-)
+input_text = [
+    "<verbalization>:Мені 23 роки і я маю $500 у своєму банку що на вул. Жмеринській!",
+    "<verbalization>:Ти 5-м будеш у черзі.",
+    "<verbalization>:1997 року народження, він 23 рази ходив в походи!",
+]
 
 encoded_input = tokenizer(
     input_text, return_tensors="pt", padding=True, truncation=True, max_length=1024
@@ -36,6 +38,7 @@ encoded_input = tokenizer(
 output_ids = model.generate(
     **encoded_input, max_length=1024, num_beams=5, early_stopping=True
 )
-output_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+output_texts = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
 
-print(output_text)
+for output_text in output_texts:
+    print(output_text)
