@@ -13,8 +13,10 @@ Authors:
 
 1. Use https://huggingface.co/facebook/mms-lid-126 to detect the language in audio samples.
 
-2. Use https://huggingface.co/skypro1111/mbart-large-50-verbalization to do text normalization of text samples
-(convert numerals to their text form, that is, $5 -> five dollars).
+2. Use https://github.com/pemistahl/lingua-py to detect the language in text samples.
+
+3. Use https://huggingface.co/skypro1111/mbart-large-50-verbalization to do text normalization 
+(convert numerals/abbreviations to their textual representation, that is, $5 -> five dollars).
 
 ## Details
 
