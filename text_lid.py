@@ -39,6 +39,6 @@ with open(args.to, "w") as f_to:
 
             text_lid_scores.append(confidence_values)
 
-        jsonline["utterances"]["text_normalized"] = text_lid_scores
+        jsonline["utterances"]["text_lid_scores"] = text_lid_scores
 
         f_to.write(json.dumps(jsonline) + "\n")
