@@ -7,3 +7,5 @@ datasets
 
 librosa
 soundfile
+
+lingua-language-detector

@@ -31,11 +31,7 @@ source .venv/bin/activate
 uv pip install -r requirements.txt
 
 # in development mode
-
-uv pip install ruff
-
-ruff check
-ruff format
+uv pip install -r requirements-dev.txt
 ```
 
 ## Usage
@@ -54,7 +50,15 @@ python extract_utterances.py --cache_dir cache-yodas2-uk --subset uk000 --batch_
 python extract_utterances.py --cache_dir cache2-yodas2-uk --subset uk100 --batch_size 32 > data/uk100.jsonl
 ```
 
-3. Normalize utterances:
+3. Text LID:
+
+```shell
+python text_lid.py --file data/uk000.jsonl --to data/uk000_+tlid.jsonl
+
+python text_lid.py --file data/uk100.jsonl --to data/uk100_+tlid.jsonl
+```
+
+4. Normalize utterances:
 
 ```shell
 python normalize_utterances.py --file data/uk000.jsonl --batch_size 8 --device cuda:0 --to data/uk000_normalized.jsonl
@@ -62,18 +66,33 @@ python normalize_utterances.py --file data/uk000.jsonl --batch_size 8 --device c
 python normalize_utterances.py --file data/uk100.jsonl --batch_size 8 --device cuda:1 --to data/uk100_normalized.jsonl
 ```
 
-2. (optional) Inference audio samples from YODAS2 by difference variants of MMS LID model to see their outputs:
+## Examples
+
+1. Inference audio samples by the different variants of MMS LID model to see their outputs:
 
 ```shell
-python mms_lid.py --model_id facebook/mms-lid-126 --cache_dir cache-yodas2-uk --subset uk000 --device cuda:0 > mms-checkpoints-test/mms-lid-126.txt
+python audio_lid.py --model_id facebook/mms-lid-126 --cache_dir ../cache-yodas2-uk --subset uk000 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
 
-python mms_lid.py --model_id facebook/mms-lid-256 --cache_dir cache2-yodas2-uk --subset uk100 --device cuda:0 > mms-checkpoints-test/mms-lid-126.txt
+python audio_lid.py --model_id facebook/mms-lid-256 --cache_dir ../cache2-yodas2-uk --subset uk100 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
 ```
 
-3. (optional) Inference a text sample by MBART model for text normalization:
+2. Inference text samples by lingua-py to see their text language:
 
 ```shell
-python text_normalization.py
+python text_lid.py --cache_dir ../cache-yodas2-uk --subset uk000
+```
+
+3. Inference text samples by the MBART model for text normalization:
+
+```shell
+python normalize_utterances.py
+```
+
+## Development
+
+```shell
+ruff check
+ruff format
 ```
 
 ## Misc
