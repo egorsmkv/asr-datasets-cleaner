@@ -18,16 +18,15 @@ train_set = train_set.remove_columns(["audio"])
 
 ds_iter = train_set.iter(batch_size=args.batch_size)
 
-for i, batch in enumerate(ds_iter):
-    for ii in range(len(batch["utterances"])):
-        utterances = batch["utterances"][ii]
-        texts = utterances["text"]
-        if len(texts) == 0:
+for batch in ds_iter:
+    for idx, utterances in enumerate(batch["utterances"]):
+        text = utterances["text"]
+        if len(text) == 0:
             continue
 
-        ds_id = batch["id"][ii]
-        video_id = batch["video_id"][ii]
-        duration = batch["duration"][ii]
+        ds_id = batch["id"][idx]
+        video_id = batch["video_id"][idx]
+        duration = batch["duration"][idx]
 
         data = json.dumps(
             {

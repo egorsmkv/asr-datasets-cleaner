@@ -41,21 +41,22 @@ train_set = train_set.cast_column("audio", Audio(sampling_rate=16_000))
 
 ds_iter = train_set.iter(batch_size=args.batch_size)
 
-for i, batches in enumerate(ds_iter):
+for batch in ds_iter:
     audio_files = {}
-    for audio in batches["audio"]:
+    for audio in batch["audio"]:
         key = audio["path"].split("/")[-1].replace(".wav", "")
         audio_files[key] = torch.from_numpy(audio["array"])
 
-    for batch in batches["utterances"]:
-        if len(batch["text"]) == 0:
+    for utterances in batch["utterances"]:
+        text = utterances["text"]
+        if len(text) == 0:
             continue
 
-        utterances = []
-        for j, text in enumerate(batch["text"]):
-            utt_id = batch["utt_id"][j]
-            start = batch["start"][j]
-            end = batch["end"][j]
+        audio_utterances = []
+        for idx, text in enumerate(text):
+            utt_id = utterances["utt_id"][idx]
+            start = utterances["start"][idx]
+            end = utterances["end"][idx]
 
             audio_key = "-".join(utt_id.split("-")[:-3])
             audio_data = audio_files[audio_key]
@@ -70,16 +71,16 @@ for i, batches in enumerate(ds_iter):
             if len(extracted_audio) == 0:
                 continue
 
-            utterances.append(
+            audio_utterances.append(
                 {
                     "utt_id": utt_id,
                     "array": extracted_audio,
                 }
             )
 
-        for utterance in utterances:
+        for audio_utterance in audio_utterances:
             inputs = processor(
-                utterance["array"], sampling_rate=16_000, return_tensors="pt"
+                audio_utterance["array"], sampling_rate=16_000, return_tensors="pt"
             ).to(args.device)
 
             with torch.inference_mode():
@@ -88,7 +89,8 @@ for i, batches in enumerate(ds_iter):
             lang_id = torch.argmax(outputs, dim=-1)[0].item()
             detected_lang = audio_lid.config.id2label[lang_id]
 
-            print(utterance["utt_id"], detected_lang)
+            row = f"{audio_utterance['utt_id']} {detected_lang}"
 
             with open(args.to, "a") as f_to:
-                f_to.write(f"{utterance['utt_id']} {detected_lang}" + "\n")
+                print(row)
+                f_to.write(row + "\n")

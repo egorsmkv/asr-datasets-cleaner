@@ -47,9 +47,9 @@ nq python download_dataset.py
 2. Extract utterances:
 
 ```shell
-python extract_utterances.py --cache_dir cache-yodas2-uk --subset uk000 --batch_size 32 > data/uk000.jsonl
+python extract_utterances.py --cache_dir cache-yodas2-uk --subset uk000 --batch_size 128 > data/uk000.jsonl
 
-python extract_utterances.py --cache_dir cache2-yodas2-uk --subset uk100 --batch_size 32 > data/uk100.jsonl
+python extract_utterances.py --cache_dir cache2-yodas2-uk --subset uk100 --batch_size 128 > data/uk100.jsonl
 ```
 
 3. Text LID:
@@ -94,6 +94,14 @@ python text_lid.py --cache_dir ../cache-yodas2-uk --subset uk000
 
 ```shell
 python normalize_utterances.py
+```
+
+4. Calculate the duration of the dataset:
+
+```shell
+python count_durations.py --cache_dir ./cache-yodas2-uk --subset uk000 --batch_size 128
+
+python count_durations.py --cache_dir ./cache2-yodas2-uk --subset uk100 --batch_size 128
 ```
 
 ## Development
