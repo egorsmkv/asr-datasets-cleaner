@@ -29,7 +29,7 @@ for i in range(max_files + 1):
     train_files.append(duration_file)
     train_files.append(json_file)
 
-print('Dataset files:')
+print("Dataset files:")
 print(train_files)
 
 ds = load_dataset(

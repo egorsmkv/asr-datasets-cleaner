@@ -70,7 +70,7 @@ python convert_dataset.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --max_fil
 4. Extract utterances:
 
 ```shell
-python extract_utterances.py --dataset_dir `pwd`/uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 128 > data/uk000.jsonl
+python extract_utterances.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --cache_dir ../cache-yodas2-uk000 --batch_size 128 > data/uk000.jsonl
 ```
 
 5. Text LID:

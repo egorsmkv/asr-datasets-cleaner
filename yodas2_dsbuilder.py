@@ -291,17 +291,19 @@ class Yodas2(datasets.GeneratorBasedBuilder):
                 )
             ),
             supervised_keys=None,
-            homepage="",  # TODO
-            citation="",  # TODO
+            homepage="",
+            citation="",
         )
 
     def _split_generators(self, dl_manager):
         """Returns SplitGenerators."""
-        # TODO
 
         print(self.config)
-        # total_cnt = lang2shard_cnt[self.config.name]
-        total_cnt = len(list(self.config.data_files["train"])) // 3
+        if self.config.data_files is None:
+            audio_path = Path(self.base_path) / self.config.data_dir / "audio"
+            total_cnt = len(list(audio_path.glob("*.tar.gz")))
+        else:
+            total_cnt = len(list(self.config.data_files["train"])) // 3
 
         idx_lst = [f"{i:08d}" for i in range(total_cnt)]
         audio_tar_files = dl_manager.download(

@@ -9,12 +9,22 @@ os.environ["HF_DATASETS_OFFLINE"] = "true"
 parser = argparse.ArgumentParser(description="Extract utterances")
 
 parser.add_argument("-dd", "--dataset_dir", required=True)
+parser.add_argument("-ss", "--subset", required=True)
 parser.add_argument("-cd", "--cache_dir", required=True)
 parser.add_argument("-bs", "--batch_size", type=int, required=True)
 
 args = parser.parse_args()
 
-ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
+subset = args.subset
+data_dir = f"data/{subset}"
+
+ds = load_dataset(
+    args.dataset_dir,
+    subset,
+    data_dir=data_dir,
+    trust_remote_code=True,
+    cache_dir=args.cache_dir,
+)
 
 train_set = ds["train"]
 train_set = train_set.remove_columns(["audio"])
