@@ -64,7 +64,7 @@ Copy the `yodas2_dsbuilder.py` file to your `dataset_dir` directory and rename i
 Then convert the dataset, it will unarchive files and generate metadata:
 
 ```shell
-python convert_dataset.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --max_files 10 --cache_dir cache-yodas2-uk000000
+python convert_dataset.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --max_files 10 --cache_dir cache-yodas2-uk000
 ```
 
 4. Extract utterances:
