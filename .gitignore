@@ -8,3 +8,5 @@ cache2-yodas2-uk/
 
 # this is nq output
 ,*.*
+
+download_dataset.sh

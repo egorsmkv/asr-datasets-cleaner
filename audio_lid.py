@@ -11,13 +11,13 @@ os.environ["HF_DATASETS_OFFLINE"] = "true"
 
 parser = argparse.ArgumentParser(description="Audio LID on utterances")
 
+parser.add_argument("-dd", "--dataset_dir", required=True)
+parser.add_argument("-cd", "--cache_dir", required=True)
+parser.add_argument("-m", "--model_id", required=True)
 parser.add_argument("-f", "--file", required=True)
 parser.add_argument("-t", "--to", required=True)
-parser.add_argument("-m", "--model_id", required=True)
 parser.add_argument("-bs", "--batch_size", type=int, required=True)
 parser.add_argument("-d", "--device", required=True)
-parser.add_argument("-cd", "--cache_dir", required=True)
-parser.add_argument("-s", "--subset", required=True)
 
 args = parser.parse_args()
 
@@ -36,7 +36,7 @@ with open(args.to, "w") as f:
     f.write("")
 
 
-ds = load_dataset("espnet/yodas2", args.subset, cache_dir=args.cache_dir)
+ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
 
 train_set = ds["train"]
 train_set = train_set.cast_column("audio", Audio(sampling_rate=16_000))

@@ -20,8 +20,15 @@ Authors:
 
 ## Details
 
-- We use the *Ukrainian* subset of [YODAS2][1] in our experiment.
-- You need to have [uv][2], [nq][3], Python 3.12, and a CUDA device to run the code.
+- We patch the YODAS2's dataset builder script to download only a part of the dataset.
+- We use the *Ukrainian* subset of [YODAS2][1] in our command examples.
+
+## Required software
+
+- Python 3.12
+- [uv][2]
+- [nq][3]
+- CUDA device
 
 ## Install
 
@@ -38,56 +45,66 @@ uv pip install -r requirements-dev.txt
 
 ## Usage
 
-1. Download the dataset to the local disk:
+1. Generate a bash file to download required files from [YODAS2][1]:
 
 ```shell
-nq python download_dataset.py
+python generate_commands.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --max_files 10 > download_dataset.sh
 ```
 
-2. Extract utterances:
+2. Download the dataset:
 
 ```shell
-python extract_utterances.py --cache_dir cache-yodas2-uk --subset uk000 --batch_size 128 > data/uk000.jsonl
-
-python extract_utterances.py --cache_dir cache2-yodas2-uk --subset uk100 --batch_size 128 > data/uk100.jsonl
+bash download_dataset.sh
 ```
 
-3. Text LID:
+3. Convert the dataset to `datasets` format:
+
+Copy the `yodas2_dsbuilder.py` file to your `dataset_dir` directory and rename it as `dataset_dir`. So in the following example, the `dataset_dir` is `uk_yodas2` and the script must be renamed as `uk_yodas2.py`.
+
+Then convert the dataset, it will unarchive files and generate metadata:
+
+```shell
+python convert_dataset.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --max_files 10 --cache_dir cache-yodas2-uk000000
+```
+
+4. Extract utterances:
+
+```shell
+python extract_utterances.py --dataset_dir `pwd`/uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 128 > data/uk000.jsonl
+```
+
+5. Text LID:
 
 ```shell
 python text_lid.py --file data/uk000.jsonl --to data/uk000_+tlid.jsonl
-
-python text_lid.py --file data/uk100.jsonl --to data/uk100_+tlid.jsonl
 ```
 
-4. Audio LID:
+6. Audio LID:
 
 ```shell
-python audio_lid.py --cache_dir cache-yodas2-uk --subset uk000 --batch_size 16 --model_id facebook/mms-lid-126 --file data/uk000_+tlid.jsonl --to data/uk000_+tlid_+alid.jsonl --device cuda:0
+python audio_lid.py --dataset_dir `pwd`/uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 16 --model_id facebook/mms-lid-126 --file data/uk000_+tlid.jsonl --to data/uk000_+tlid_+alid.jsonl --device cuda:0
 ```
 
-5. Normalize utterances:
+7. Normalize utterances:
 
 ```shell
-python normalize_utterances.py --file data/uk000.jsonl --batch_size 8 --device cuda:0 --to data/uk000_normalized.jsonl
-
-python normalize_utterances.py --file data/uk100.jsonl --batch_size 8 --device cuda:1 --to data/uk100_normalized.jsonl
+python normalize_utterances.py --file data/uk000.jsonl --to data/uk000_normalized.jsonl --batch_size 8 --device cuda:0
 ```
 
 ## Examples
 
+0. Go to `examples/`
+
 1. Inference audio samples by the different variants of MMS LID model to see their outputs:
 
 ```shell
-python audio_lid.py --model_id facebook/mms-lid-126 --cache_dir ../cache-yodas2-uk --subset uk000 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
-
-python audio_lid.py --model_id facebook/mms-lid-256 --cache_dir ../cache2-yodas2-uk --subset uk100 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
+python audio_lid.py --model_id facebook/mms-lid-126 --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
 ```
 
 2. Inference text samples by lingua-py to see their text language:
 
 ```shell
-python text_lid.py --cache_dir ../cache-yodas2-uk --subset uk000
+python text_lid.py --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000
 ```
 
 3. Inference text samples by the MBART model for text normalization:
@@ -99,9 +116,7 @@ python normalize_utterances.py
 4. Calculate the duration of the dataset:
 
 ```shell
-python count_durations.py --cache_dir ./cache-yodas2-uk --subset uk000 --batch_size 128
-
-python count_durations.py --cache_dir ./cache2-yodas2-uk --subset uk100 --batch_size 128
+python count_durations.py --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 128
 ```
 
 ## Development

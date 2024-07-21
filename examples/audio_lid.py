@@ -6,14 +6,14 @@ from datasets import load_dataset
 
 parser = argparse.ArgumentParser(description="Show how MMS LID works")
 
+parser.add_argument("-dd", "--dataset_dir", required=True)
 parser.add_argument("-cd", "--cache_dir", required=True)
 parser.add_argument("-m", "--model_id", required=True)
-parser.add_argument("-s", "--subset", required=True)
 parser.add_argument("-d", "--device", required=True)
 
 args = parser.parse_args()
 
-ds = load_dataset("espnet/yodas2", args.subset, cache_dir=args.cache_dir)
+ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
 
 processor = AutoFeatureExtractor.from_pretrained(args.model_id)
 model = Wav2Vec2ForSequenceClassification.from_pretrained(args.model_id).to(args.device)

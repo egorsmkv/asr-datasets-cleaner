@@ -6,9 +6,9 @@ from transformers import MBartForConditionalGeneration, AutoTokenizer
 parser = argparse.ArgumentParser(description="Normalize utterances")
 
 parser.add_argument("-f", "--file", required=True)
+parser.add_argument("-t", "--to", required=True)
 parser.add_argument("-d", "--device", required=True)
 parser.add_argument("-bs", "--batch_size", type=int, required=True)
-parser.add_argument("-t", "--to", required=True)
 
 args = parser.parse_args()
 

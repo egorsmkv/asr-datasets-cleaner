@@ -8,13 +8,13 @@ os.environ["HF_DATASETS_OFFLINE"] = "true"
 
 parser = argparse.ArgumentParser(description="Extract utterances")
 
+parser.add_argument("-dd", "--dataset_dir", required=True)
 parser.add_argument("-cd", "--cache_dir", required=True)
-parser.add_argument("-s", "--subset", required=True)
 parser.add_argument("-bs", "--batch_size", type=int, required=True)
 
 args = parser.parse_args()
 
-ds = load_dataset("espnet/yodas2", args.subset, cache_dir=args.cache_dir)
+ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
 
 train_set = ds["train"]
 train_set = train_set.remove_columns(["audio"])

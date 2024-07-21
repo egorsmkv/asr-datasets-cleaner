@@ -5,12 +5,12 @@ from datasets import load_dataset
 
 parser = argparse.ArgumentParser(description="lingua-py LID")
 
+parser.add_argument("-dd", "--dataset_dir", required=True)
 parser.add_argument("-cd", "--cache_dir", required=True)
-parser.add_argument("-s", "--subset", required=True)
 
 args = parser.parse_args()
 
-ds = load_dataset("espnet/yodas2", args.subset, cache_dir=args.cache_dir)
+ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
 
 text_lid = (
     LanguageDetectorBuilder.from_all_languages()
