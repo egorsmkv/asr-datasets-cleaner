@@ -7,13 +7,23 @@ from datasets import load_dataset
 parser = argparse.ArgumentParser(description="Show how MMS LID works")
 
 parser.add_argument("-dd", "--dataset_dir", required=True)
+parser.add_argument("-ss", "--subset", required=True)
 parser.add_argument("-cd", "--cache_dir", required=True)
 parser.add_argument("-m", "--model_id", required=True)
 parser.add_argument("-d", "--device", required=True)
 
 args = parser.parse_args()
 
-ds = load_dataset(args.dataset_dir, cache_dir=args.cache_dir)
+subset = args.subset
+data_dir = f"data/{subset}"
+
+ds = load_dataset(
+    args.dataset_dir,
+    subset,
+    data_dir=data_dir,
+    trust_remote_code=True,
+    cache_dir=args.cache_dir,
+)
 
 processor = AutoFeatureExtractor.from_pretrained(args.model_id)
 model = Wav2Vec2ForSequenceClassification.from_pretrained(args.model_id).to(args.device)

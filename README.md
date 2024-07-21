@@ -98,13 +98,13 @@ python normalize_utterances.py --file data/uk000.jsonl --to data/uk000_normalize
 1. Inference audio samples by the different variants of MMS LID model to see their outputs:
 
 ```shell
-python audio_lid.py --model_id facebook/mms-lid-126 --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
+python audio_lid.py --model_id facebook/mms-lid-126 --dataset_dir `pwd`/../uk_yodas2 --subset uk000 --cache_dir ../cache-yodas2-uk000 --device cuda:0 > ../mms-checkpoints-test/mms-lid-126.txt
 ```
 
 2. Inference text samples by lingua-py to see their text language:
 
 ```shell
-python text_lid.py --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000
+python text_lid.py --dataset_dir `pwd`/../uk_yodas2 --subset uk000 --cache_dir ../cache-yodas2-uk000
 ```
 
 3. Inference text samples by the MBART model for text normalization:
@@ -116,7 +116,7 @@ python normalize_utterances.py
 4. Calculate the duration of the dataset:
 
 ```shell
-python count_durations.py --dataset_dir `pwd`/../uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 128
+python count_durations.py --dataset_dir `pwd`/../uk_yodas2 --subset uk000 --cache_dir ../cache-yodas2-uk000 --batch_size 128
 ```
 
 ## Development
