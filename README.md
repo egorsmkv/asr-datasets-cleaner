@@ -20,8 +20,8 @@ Authors:
 
 ## Details
 
-- We patch the YODAS2's dataset builder script to download only a part of the dataset.
 - We use the *Ukrainian* subset of [YODAS2][1] in our command examples.
+- We patch the YODAS2's dataset builder script to download only a part of the dataset.
 
 ## Required software
 

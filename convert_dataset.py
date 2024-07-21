@@ -12,7 +12,7 @@ args = parser.parse_args()
 
 dataset_dir = args.dataset_dir
 subset = args.subset
-data_dir = f"{dataset_dir}/data/{subset}"
+data_dir = f"data/{subset}"
 max_files = args.max_files
 cache_dir = args.cache_dir
 
@@ -29,9 +29,11 @@ for i in range(max_files + 1):
     train_files.append(duration_file)
     train_files.append(json_file)
 
+print('Dataset files:')
+print(train_files)
 
 ds = load_dataset(
-    data_dir,
+    dataset_dir,
     data_files={
         "train": train_files,
     },
