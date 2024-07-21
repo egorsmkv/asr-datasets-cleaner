@@ -82,7 +82,7 @@ python text_lid.py --file data/uk000.jsonl --to data/uk000_+tlid.jsonl
 6. Audio LID:
 
 ```shell
-python audio_lid.py --dataset_dir `pwd`/uk_yodas2 --cache_dir ../cache-yodas2-uk000 --batch_size 16 --model_id facebook/mms-lid-126 --file data/uk000_+tlid.jsonl --to data/uk000_+tlid_+alid.jsonl --device cuda:0
+python audio_lid.py --dataset_dir `pwd`/uk_yodas2 --subset uk000 --cache_dir ../cache-yodas2-uk000 --batch_size 16 --model_id facebook/mms-lid-126 --file data/uk000_+tlid.jsonl --to data/uk000_+tlid_+alid.jsonl --device cuda:0
 ```
 
 7. Normalize utterances:
