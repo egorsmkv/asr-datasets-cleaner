@@ -3,8 +3,7 @@
 
 data/
 
-cache-yodas2-uk/
-cache2-yodas2-uk/
+uk*_yodas2*
 
 # this is nq output
 ,*.*
