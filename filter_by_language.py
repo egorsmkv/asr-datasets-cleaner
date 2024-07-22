@@ -20,11 +20,11 @@ with open(args.file, "r") as f:
 
 with open(args.to, "w") as f_to:
     for jsonline in jsonlines:
-        utterances = jsonline["utterances"]["text"]
+        texts = jsonline["utterances"]["text"]
 
         replaced_texts = []
 
-        for idx, text in enumerate(utterances):
+        for idx, text in enumerate(texts):
             scores = jsonline["utterances"]["text_lid_scores"][idx]
             if len(scores) == 0:
                 continue
@@ -49,5 +49,5 @@ with open(args.to, "w") as f_to:
 
 print("---")
 
-print(f"Correct {correct_utterance_texts} texts")
-print(f"Incorrect {incorrect_utterance_texts} texts")
+print(f"Correct {correct_utterance_texts} utterance texts")
+print(f"Incorrect {incorrect_utterance_texts} utterance texts")
