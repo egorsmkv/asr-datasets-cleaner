@@ -2,6 +2,7 @@
 .ruff_cache/
 
 data/
+test-llm/
 
 uk*_yodas2*
 
